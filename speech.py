@@ -45,7 +45,7 @@ def main(speech_file):
     service_request = service.speech().syncrecognize(
         body={
             'config': {
-                'encoding': 'LINEAR16',  # raw 16-bit signed LE samples
+                'encoding': 'linear16',  # wav 16-bit signed LE samples
                 'sampleRate': 16000,  # 16 khz
                 'languageCode': 'en-US',  # a BCP-47 language tag
             },
