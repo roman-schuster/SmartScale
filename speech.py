@@ -56,11 +56,15 @@ def main(speech_file):
     response = service_request.execute()
     response_json = json.dumps(response)
     
+    
+    # Unwrapping the json
     results = response['results']
     text_string = ''
-    for alt in results:
-      alternative = alt['alternatives']
-      transcript = alternative['transcript']
+    
+    for alt_list in results:
+      alternatives = alt_list[0]
+      transcript = alternatives['transcript']
+
       for single_character in transcript:
         text_string += single_character
     
