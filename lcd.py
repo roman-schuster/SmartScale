@@ -91,9 +91,7 @@ def main(speech_file):
     
     lcd.autoscroll(True)
     lcd.message(result_string)
-    for i in range(len(message)-lcd_columns):
-        time.sleep(0.5)
-        lcd.move_right()
+    
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
