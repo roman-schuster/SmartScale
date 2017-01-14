@@ -44,4 +44,4 @@ fi
 ##### Calling Python Script #####
 #################################
 
-python speech.py speech.wav
+python lcd.py speech.wav
