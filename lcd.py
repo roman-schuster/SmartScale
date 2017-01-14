@@ -95,7 +95,8 @@ def main(speech_file):
     while num_new_lines < lcd_rows:
         num_new_lines += 1
         for col in range(lcd_columns):
-            result_string_lcd += result_string[col+(num_new_lines*lcd_columns)]
+            if (col+(num_new_lines*lcd_columns)) < len(result_string_lcd)
+                result_string_lcd += result_string[col+(num_new_lines*lcd_columns)]
         result_string_lcd += '\n'
     
     lcd.message(result_string_lcd)
