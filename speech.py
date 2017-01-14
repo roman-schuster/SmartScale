@@ -58,8 +58,13 @@ def main(speech_file):
     result_string = ''
     # results is a list of alternative recognition hypotheses from google speech api
     results = json.dumps(response)
+    print('\n################')
+    print('Printing results')
+    print('################\n')
     print(results)
-    print('type of results: ' + type(results))
+    print('type of results: ' + str(type(results)))
+    
+    
     
 
 
