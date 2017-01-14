@@ -80,17 +80,25 @@ def main(speech_file):
     results = json.loads(json_results)['results']
     
     result_string = ''
+    result_string_lcd = ''
+    
     for result in results:
         alternatives = result['alternatives']
     
         for alternative in alternatives:
             transcript = alternative['transcript']
         
-            for transcript_char in transcript:
-                result_string += transcript_char
+            for i in range(len(transcript)):
+                result_string += transcript[i]
     
-    lcd.autoscroll(True)
-    lcd.message(result_string)
+    num_new_lines = 0
+    while num_new_lines < lcd_rows:
+        num_new_lines += 1
+        for col in range(lcd_columns):
+            result_string_lcd += result_string[col+(num_new_lines*lcd_columns)]
+        result_string_lcd += '\n'
+    
+    lcd.message(result_string_lcd)
     
     
 if __name__ == '__main__':
