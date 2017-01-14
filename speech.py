@@ -55,14 +55,20 @@ def main(speech_file):
             })
     response = service_request.execute()
     
-    result_string = ''
-    # results is a list of alternative recognition hypotheses from google speech api
-    results = json.dumps(response)
-    print('\n################')
-    print('Printing results')
-    print('################\n')
-    print(results)
-    print('type of results: ' + str(type(results)))
+    # Unwrapping the json
+    json_results = json.dumps(response)
+    results = json.loads(json_results)['results']
+
+    for result in results:
+        alternatives = result['alternatives']
+    
+        for alternative in alternatives:
+            transcript = alternative['transcript']
+        
+            for transcript_char in transcript:
+                result_string += transcript_char
+            
+    print('You said: ' + result_string)
     
     
     
