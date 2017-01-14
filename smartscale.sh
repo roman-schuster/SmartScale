@@ -30,9 +30,9 @@ fi
 	# Duration			:	00:00:10.00 = 16000 samples ~ 750 CDDA sectors
 	# File Size			:	650kb
 	# Bit Rate			:	512k
-	# VU-meter			:	stereo
+	# VU-meter			:	mono (1 channel)
 echo "Recording"
-arecord -f cd -r 16000 -d 10 -t wav -D plughw:1,0 speech.wav
+arecord -f cd -r 16000 -d 10 -t wav -V mono -D plughw:1,0 speech.wav
 
 
 # Making sure the reording saved properly
