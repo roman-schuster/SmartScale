@@ -90,16 +90,12 @@ def main(speech_file):
         
             for i in range(len(transcript)):
                 result_string += transcript[i]
-    
-    num_new_lines = 0
-    while num_new_lines < lcd_rows:
-        num_new_lines += 1
-        for col in range(lcd_columns):
-            if (col+(num_new_lines*lcd_columns)) < len(result_string_lcd):
-                result_string_lcd += result_string[col+(num_new_lines*lcd_columns)]
-        if num_new_lines + 1 != lcd_rows:
-            result_string_lcd += '\n'
-    
+                if i < 32:
+                    if i == 15:
+                        result_string_lcd += ('\n' + transcript[i])
+                    else:
+                        result_scring_lcd += transcript[i]
+
     lcd.message(result_string_lcd)
     
     
