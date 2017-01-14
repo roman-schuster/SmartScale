@@ -58,7 +58,8 @@ def main(speech_file):
     # Unwrapping the json
     json_results = json.dumps(response)
     results = json.loads(json_results)['results']
-
+    
+    result_string = ''
     for result in results:
         alternatives = result['alternatives']
     
