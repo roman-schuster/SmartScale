@@ -54,8 +54,17 @@ def main(speech_file):
                 }
             })
     response = service_request.execute()
-    print(json.dumps(response))
+    response_json = json.dumps(response)
     
+    results = response['results']
+    text_string = ''
+    for alt in results:
+      alternative = alt['alternatives']
+      transcript = alternative['transcript']
+      for single_character in transcript:
+        text_string += single_character
+    
+    print('You said: ' + text_string)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
