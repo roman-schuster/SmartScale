@@ -90,14 +90,15 @@ def main(speech_file):
         
             for i in range(len(transcript)):
                 result_string += transcript[i]
+                # TODO: make a bunch of result_string_lcd variables to display them one after the other...
+                # How many is gonna be the hard part
                 if i < 32:
                     if i == 15:
                         result_string_lcd += ('\n' + transcript[i])
                     else:
-                        result_scring_lcd += transcript[i]
+                        result_string_lcd += transcript[i]
 
     lcd.message(result_string_lcd)
-    
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
