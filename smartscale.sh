@@ -32,7 +32,7 @@ fi
 	# Bit Rate			:	512k
 	# VU-meter			:	mono (1 channel)
 echo "Recording"
-arecord -f cd -r 16000 -d 10 -t wav -V mono -D plughw:1,0 speech.wav
+arecord -f cd -r 16000 -d 10 -t wav -c 1 -D plughw:1,0 speech.wav
 
 
 # Making sure the reording saved properly
