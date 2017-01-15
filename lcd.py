@@ -119,7 +119,7 @@ def main(speech_file):
     for msg in messages:
         lcd.clear()
         lcd.message(msg)
-        time.sleep(1.5)
+        time.sleep(3.0)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
