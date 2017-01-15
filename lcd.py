@@ -117,6 +117,7 @@ def main(speech_file):
 
     messages = format_string_for_lcd(lcd_columns, lcd_rows, result_string)
     for msg in messages:
+        lcd.clear()
         lcd.message(msg)
         time.sleep(1.5)
     
