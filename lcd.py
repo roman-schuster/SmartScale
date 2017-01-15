@@ -75,6 +75,7 @@ def main(speech_file):
                 'encoding': 'linear16',
                 'sampleRate': 16000,
                 'languageCode': 'en-US',
+                'profanityFilter': False,
             },
             'audio': {
                 'content': speech_content.decode('UTF-8')
