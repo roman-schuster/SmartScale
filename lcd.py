@@ -85,6 +85,7 @@ def main(speech_file):
     response = service_request.execute()
     
     # Unwrapping the json
+    result_string = '' # The final string containing the text we translated
     json_results = json.dumps(response)
     results = json.loads(json_results)['results']
     for result in results:
