@@ -87,6 +87,14 @@ def main(speech_file):
     # Unwrapping the json
     json_results = json.dumps(response)
     results = json.loads(json_results)['results']
+    for result in results:
+        alternatives = result['alternatives']
+    
+        for alternative in alternatives:
+            transcript = alternative['transcript']
+        
+            for i in range(len(transcript)):
+                result_string += transcript[i]
     
     # Raspberry Pi pin configuration:
     lcd_rs        = 25
@@ -102,18 +110,6 @@ def main(speech_file):
 
     # Initialize the LCD using the pins above.
     lcd = LCD.Adafruit_CharLCD(lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7, lcd_columns, lcd_rows)
-    
-    result_string = ''
-    result_list_lcd = []
-    
-    for result in results:
-        alternatives = result['alternatives']
-    
-        for alternative in alternatives:
-            transcript = alternative['transcript']
-        
-            for i in range(len(transcript)):
-                result_string += transcript[i]
 
     messages = format_string_for_lcd(lcd_columns, lcd_rows, result_string)
     for msg in messages:
