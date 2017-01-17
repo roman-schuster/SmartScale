@@ -8,8 +8,9 @@ from oauth2client import tools
 from oauth2client.file import Storage
 
 
-SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
-APPLICATION_NAME = 'Google Sheets API Python Quickstart'
+SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
+APPLICATION_NAME = 'Smart Scale'
+CLIENT_SECRET_FILE = 'sheets_client_secret.json'
 
 def get_credentials():
     '''
@@ -21,20 +22,19 @@ def get_credentials():
     Returns:
         Credentials, the obtained credential.
     '''    
-    
-    credential_dir = "/home/pi/SmartScale/sheets_client_secret.json "
+    home_dir = "/home/pi/SmartScale/"
+    credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)
-        credential_path = os.path.join(credential_dir,
-        'sheets.googleapis.com-python-quickstart.json')
-        store = Storage(credential_path)    
-        credentials = store.get()    
-        if not credentials or credentials.invalid:        
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)        
-        flow.user_agent = APPLICATION_NAME        
-        if flags:            
-        credentials = tools.run_flow(flow, store, flags)        
-        else: # Needed only for compatibility with Python 2.6            
-        credentials = tools.run(flow, store)        
-        print('Storing credentials to ' + credential_path)    
-        return credentials
+    credential_path = os.path.join(credential_dir,
+                                   'sheets.googleapis.com-python-quickstart.json')
+    
+    store = Storage(credential_path)
+    credentials = store.get()
+    
+    if not credentials or credentials.invalid:
+        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+        flow.user_agent = APPLICATION_NAME
+        credentials = tools.run_flow(flow, store)
+    
+    return credentials
