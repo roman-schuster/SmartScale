@@ -38,3 +38,33 @@ def get_credentials():
         credentials = tools.run_flow(flow, store)
     
     return credentials
+
+def main():
+    '''
+    Shows basic usage of the Sheets API.
+    
+    Creates a Sheets API service object and prints the names and majors of
+    students in a sample spreadsheet:
+    https://docs.google.com/spreadsheets
+    '''
+    credentials = get_credentials()
+    http = credentials.authorize(httplib2.Http())
+    discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
+                    'version=v4')
+    service = discovery.build('sheets', 'v4', http=http,
+                              discoveryServiceUrl=discoveryUrl)
+    spreadsheetId = '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
+    rangeName = 'Class Data!A2:E'
+    result = service.spreadsheets().values().get(
+        spreadsheetId=spreadsheetId, range=rangeName).execute()
+    values = result.get('values', [])
+    
+    if not values:
+        print('No data found.')
+    else:
+        print('Name, Major:')
+        for row in values:
+            print('%s, %s' % (row[0], row[4]))
+            
+if __name__ == '__main__':
+    main()
