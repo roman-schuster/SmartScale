@@ -10,6 +10,7 @@ import httplib2
 
 from googleapiclient import discovery
 from oauth2client.client import GoogleCredentials
+from google.cloud import translate
 
 # Setting up Google Cloud Speech API
 DISCOVERY_URL = ('https://{api}.googleapis.com/$discovery/rest?'
@@ -32,6 +33,18 @@ def get_speech_service():
 
     return discovery.build(
         'speech', 'v1beta1', http=http, discoveryServiceUrl=DISCOVERY_URL)
+
+def translate_text(txt, target):
+    
+    translate_client = translate.Client()
+    text = txt
+    target = target
+    
+    translation = translate_client.translate(
+        text,
+        target_language = target)
+    
+    return translation['translatedText']
 
 def format_string_for_lcd(lcd_columns, lcd_rows, text_string):
     '''
@@ -56,6 +69,7 @@ def format_string_for_lcd(lcd_columns, lcd_rows, text_string):
             temp_string = ''
 
     return list_of_strings
+
 
 
 def main(speech_file):
