@@ -1,15 +1,15 @@
 #!/usr/bin/python
 
-import time
-import Adafruit_CharLCD as LCD
+import time                                         # waiting between lcd messages
+import Adafruit_CharLCD as LCD                      # for LCD
 
-import argparse
-import base64
-import json
-import httplib2
+import argparse                                     # for getting the wav file from command line
+import base64                                       # for encoding the wav file to send to Google Speech API
+import json                                         # for unwrapping the Google Speech API response
+import httplib2                                     # for sending the Google Speech API request
 
-from googleapiclient import discovery
-from oauth2client.client import GoogleCredentials
+from googleapiclient import discovery               # for accessing Google Speech Service
+from oauth2client.client import GoogleCredentials   # for authorizing Google Speech Service
 
 
 # Setting up Google Cloud Speech API
@@ -34,18 +34,6 @@ def get_speech_service():
     return discovery.build(
         'speech', 'v1beta1', http=http, discoveryServiceUrl=DISCOVERY_URL)
 
-#def translate_text(txt, target):
-    
-#    translate_client = translate.Client()
-#    text = txt
-#    target = target
-    
-#    translation = translate_client.translate(
-#        text,
-#        target_language = target)
-    
-#    return translation['translatedText']
-
 def format_string_for_lcd(lcd_columns, lcd_rows, text_string):
     '''
     Returns a list of strings to print on a lcd_columns x lcd_rows display
@@ -59,8 +47,8 @@ def format_string_for_lcd(lcd_columns, lcd_rows, text_string):
     for i in range(len(text_string)):
         if len(temp_string) == (lcd_columns - 1):
             temp_string += ('\n' + text_string[i])
-            
-        temp_string += text_string[i]
+        else:
+            temp_string += text_string[i]
         
         if i == (len(text_string) - 1):
             list_of_strings += [temp_string]
