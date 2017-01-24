@@ -11,6 +11,7 @@ import httplib2                                     # for sending the Google Spe
 from googleapiclient import discovery               # for accessing Google Speech Service
 from oauth2client.client import GoogleCredentials   # for authorizing Google Speech Service
 
+import requests                                     # for Microsoft Translate services
 
 # Setting up Google Cloud Speech API
 DISCOVERY_URL = ('https://{api}.googleapis.com/$discovery/rest?'
@@ -58,8 +59,31 @@ def format_string_for_lcd(lcd_columns, lcd_rows, text_string):
 
     return list_of_strings
 
+def translate_text(txt = 'Enter some text', from_lang = 'en', to_lang = 'fr'):
+    '''
+    Runs authentication for Microsoft Translate service on Azure Marketplace
+    Args:
+        txt: string
+        from_lang: string - must be a valid country code
+        to_lang: string - must be a valid country code
+    Returns:
+        string containing the translation of txt from from_lang to to_lang
+    '''
+    auth_key = '7d2c5a67c24c45ce90fc219a3fae8bf9'
+    auth_url = 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken'
+    auth_headers = { 'Ocp-Apim-Subscription-Key' : auth_key }
+    auth_response = requests.post(auth_url, headers = auth_headers)
+    token = auth_response.text
+    
+    translate_url = 'https://api.microsofttranslator.com/v2/http.svc/Translate'
+    translate_params = { 'appid' : ('Bearer ' + token), 'text' : txt, 'from' : from_lang, 'to' : to_lang }
+    translate_headers = { 'Accept' : 'application/xml' }
+    translate_response = requests.get(translate_url, params = translate_params, headers = translate_headers)
+    
+    return translate_response.text
 
 
+    
 def main(speech_file):
     '''
     Transcribe the given audio file and prints it on the lcd
