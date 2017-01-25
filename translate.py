@@ -1,6 +1,6 @@
 import requests
 
-def lcd_msg_formatter(txt, cols):
+def lcd_msg_formatter(txt, rows, cols):
     '''
     Formats a string into a list of strings to be printed out on the LCD
     Note that for now the LCD MUST have 2 rows
@@ -17,18 +17,23 @@ def lcd_msg_formatter(txt, cols):
         txt_copy += i
         
     msg = ''
-    while len(txt_copy) > 0:
-        if len(txt_copy) < cols:
+    num_rows = 0
+    while True:
+        
+        # Base case - finished going through the whole input string
+        if len(txt_copy) <= cols:
             msg += txt_copy
             messages += [msg]
             break
             
         lastCharIdx = cols
         for j in range(cols + 1):
-            if txt[(cols + 1) - j] == ' ' or txt[(cols + 1) - j] == '-':
+            if txt_copy[(cols + 1) - j] == ' ' or txt_copy[(cols + 1) - j] == '-':
                 lastCharIdx = ((cols + 1) - j)
+                num_rows += 1
                 break
-            if len(msg) == 0:
+                
+            if num_rows < rows:
                 for i in range(lastCharIdx):
                     msg += txt_copy[i]
                 msg += '\n'
@@ -39,6 +44,7 @@ def lcd_msg_formatter(txt, cols):
                 messages += [msg]
                 msg = ''
                 txt_copy = txt_copy[(lastCharIdx + 1):]
+                num_rows = 0
     return messages
 
 
